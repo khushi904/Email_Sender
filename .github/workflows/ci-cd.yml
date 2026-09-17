@@ -1,4 +1,4 @@
-name: Email Sender CI
+name: Email Sender CI/CD
 
 on:
   push:
@@ -20,9 +20,12 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '25'
+          java-version: '17'
           distribution: 'temurin'
           cache: maven
 
       - name: Build and Test
-        run: mvn clean verify
+        run: ./mvnw clean verify
+
+      - name: Build Docker Image
+        run: docker build -t email-sender:latest .
